@@ -29,12 +29,12 @@ pipeline {
             }
         }
 
-        stage ('Deployment Stage') {
-            steps {
-                withEnv(["PATH+MAVEN=${tool 'm3'}/bin"]) {
-                    sh 'mvn deploy'
-                }
-            }
-        }
+       // stage ('Deployment Stage') {
+       //     steps {
+       //         withEnv(["PATH+MAVEN=${tool 'm3'}/bin"]) {
+       //             sh 'mvn deploy'
+       //         }
+       //     }
+       // }
     }
 }
