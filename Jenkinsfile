@@ -5,7 +5,7 @@ pipeline {
         stage ('Compile Stage') {
 
             steps {
-                withMaven(maven : 'maven_3_5_0') {
+                withMaven(maven : 'm3') {
                     sh 'mvn clean compile'
                 }
             }
@@ -14,16 +14,21 @@ pipeline {
         stage ('Testing Stage') {
 
             steps {
-                withMaven(maven : 'maven_3_5_0') {
+                withMaven(maven : 'm3') {
                     sh 'mvn test'
                 }
             }
         }
 
+        stage('Approval') {
+            timeout(time:3, unit:'DAYS') {
+                input 'Do I have your approval for deployment?'
+            }
+        }
 
         stage ('Deployment Stage') {
             steps {
-                withMaven(maven : 'maven_3_5_0') {
+                withMaven(maven : 'm3') {
                     sh 'mvn deploy'
                 }
             }
