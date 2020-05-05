@@ -17,6 +17,7 @@ pipeline {
                 withEnv(["PATH+MAVEN=${tool 'm3'}/bin"]) {
                     sh 'mvn test'
                 }
+                jacoco()
             }
         }
 
