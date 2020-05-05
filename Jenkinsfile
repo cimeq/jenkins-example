@@ -5,7 +5,7 @@ pipeline {
         stage ('Compile Stage') {
 
             steps {
-                withMaven(maven : 'm3') {
+                withEnv(["PATH+MAVEN=${tool 'm3'}/bin"]) {
                     sh 'mvn clean compile'
                 }
             }
@@ -14,7 +14,7 @@ pipeline {
         stage ('Testing Stage') {
 
             steps {
-                withMaven(maven : 'm3') {
+                withEnv(["PATH+MAVEN=${tool 'm3'}/bin"]) {
                     sh 'mvn test'
                 }
             }
@@ -30,7 +30,7 @@ pipeline {
 
         stage ('Deployment Stage') {
             steps {
-                withMaven(maven : 'm3') {
+                withEnv(["PATH+MAVEN=${tool 'm3'}/bin"]) {
                     sh 'mvn deploy'
                 }
             }
