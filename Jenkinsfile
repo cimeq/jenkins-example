@@ -1,11 +1,44 @@
 pipeline {
     agent any
-
     stages {
+        stage('debugStep'){
+            steps {
+                sh 'printenv'
+            }
+        }
+        stage('origin-branch-stuff'){
+            agent any
+            when{
+                branch 'origin/*'
+                beforeAgent true
+            }
+            steps {
+                echo 'run this stage - ony if the branch = origin somting branch'
+            }
+        }
+   
+        stage('testmaster-branch-stuff'){
+            agent any
+            when {
+                expression {env.GIT_BRANCH == 'origin/master'}
+                beforeAgent true
+            }
+            steps {
+                echo 'run this test stage - ony if the branch = master branch'
+            }
+        }
+
+        stage('master-branch-stuff'){
+            agent { node { label 'master' } }
+            steps {
+                echo 'run this stage - ony if the branch = master branch'
+            }
+        }
+
         stage ('Compile Stage') {
 
             steps {
-                withMaven(maven : 'maven_3_5_0') {
+                withEnv(["PATH+MAVEN=${tool 'm3'}/bin"]) {
                     sh 'mvn clean compile'
                 }
             }
@@ -14,19 +47,27 @@ pipeline {
         stage ('Testing Stage') {
 
             steps {
-                withMaven(maven : 'maven_3_5_0') {
+                withEnv(["PATH+MAVEN=${tool 'm3'}/bin"]) {
                     sh 'mvn test'
                 }
+                jacoco()
             }
         }
 
-
-        stage ('Deployment Stage') {
+        stage ('Approval') {
             steps {
-                withMaven(maven : 'maven_3_5_0') {
-                    sh 'mvn deploy'
-                }
+            timeout(time:3, unit:'DAYS') {
+                input 'Do I have your approval for deployment?'
+            }
             }
         }
+
+       // stage ('Deployment Stage') {
+       //     steps {
+       //         withEnv(["PATH+MAVEN=${tool 'm3'}/bin"]) {
+       //             sh 'mvn deploy'
+       //         }
+       //     }
+       // }
     }
 }
