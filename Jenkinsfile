@@ -1,16 +1,17 @@
 pipeline {
     agent any
-    stages('master-branch-stuff'){
-        agent any
-        when{
-          branch 'master'
-        }
-        steps {
-          echo 'run this stage - ony if the branch = master branch'
-        }
-    }
-
+    
     stages {
+        stage('master-branch-stuff'){
+            agent any
+            when{
+                branch 'master'
+            }
+            steps {
+                echo 'run this stage - ony if the branch = master branch'
+            }
+        }
+
         stage ('Compile Stage') {
 
             steps {
