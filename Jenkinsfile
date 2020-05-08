@@ -4,17 +4,30 @@ pipeline {
         stage('origin-branch-stuff'){
             agent any
             when{
-                branch "origin/*"
+                branch 'origin/*'
+                beforeAgent true
             }
             steps {
                 echo 'run this stage - ony if the branch = origin somting branch'
             }
         }
-    
+   
+        stage('testmaster-branch-stuff'){
+            agent any
+            when{
+                branch '**/master'
+                beforeAgent true
+            }
+            steps {
+                echo 'run this test stage - ony if the branch = master branch'
+            }
+        }
+
         stage('master-branch-stuff'){
             agent any
             when{
                 branch 'master'
+                beforeAgent true
             }
             steps {
                 echo 'run this stage - ony if the branch = master branch'
