@@ -1,6 +1,15 @@
 pipeline {
     agent any
-    
+    stages {
+        stage('origin-branch-stuff'){
+            agent any
+            when{
+                branch "origin/*"
+            }
+            steps {
+                echo 'run this stage - ony if the branch = origin somting branch'
+            }
+        }
     stages {
         stage('master-branch-stuff'){
             agent any
