@@ -1,6 +1,11 @@
 pipeline {
     agent any
     stages {
+        stage('debugStep'){
+            steps {
+                sh 'printenv'
+            }
+        }
         stage('origin-branch-stuff'){
             agent any
             when{
