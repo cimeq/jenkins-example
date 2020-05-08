@@ -21,6 +21,7 @@ pipeline {
             agent any
             when {
                 expression {env.GIT_BRANCH == 'origin/master'}
+                beforeAgent true
             }
             steps {
                 echo 'run this test stage - ony if the branch = master branch'
@@ -28,11 +29,7 @@ pipeline {
         }
 
         stage('master-branch-stuff'){
-            agent any
-            when{
-                branch 'master'
-                beforeAgent true
-            }
+            agent { node { label 'master' } }
             steps {
                 echo 'run this stage - ony if the branch = master branch'
             }
