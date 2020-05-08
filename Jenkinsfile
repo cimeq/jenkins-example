@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    stage('master-branch-stuff'){
+    stages('master-branch-stuff'){
         agent any
         when{
           branch 'master'
