@@ -1,6 +1,7 @@
 pipeline {
     agent any
-    parameters {
+    parameters 
+    {
         string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
 
         text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
@@ -12,12 +13,14 @@ pipeline {
         choice(name: 'PerformMavenRelease', choices: 'False\nTrue', description: 'Whether or not to perform a maven release')
         credentials(name: 'CredsToUse', description: 'A user to build with', defaultValue: '', credentialType: "Username with password", required: true )           
     }
-     environment {
-        BUILD_USR_CREDS = credentials("${params.CredsToUse}")
-    }  
+//     environment {
+//        BUILD_USR_CREDS = credentials("${params.CredsToUse}")
+//    }  
     stages {
-        stage('Example') {
-            steps {
+        stage('Example') 
+        {
+            steps 
+            {
                 echo "Hello ${params.PERSON}"
 
                 echo "Biography: ${params.BIOGRAPHY}"
@@ -26,7 +29,7 @@ pipeline {
 
                 echo "Choice: ${params.CHOICE}"
 
-                echo "Password: ${params.PASSWORD}"
+//                echo "Password: ${params.PASSWORD}"
             }
         }
 //    }
