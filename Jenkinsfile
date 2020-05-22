@@ -25,8 +25,8 @@ pipeline {
                 echo "Password: ${params.PASSWORD}"
             }
         }
-    }
-    stages {
+//    }
+//    stages {
         stage('debugStep'){
             steps {
                 sh 'printenv'
