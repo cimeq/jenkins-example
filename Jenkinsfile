@@ -8,9 +8,13 @@ pipeline {
         booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
 
         choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
-
-        password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
+        
+        choice(name: 'PerformMavenRelease', choices: 'False\nTrue', description: 'Whether or not to perform a maven release')
+        credentials(name: 'CredsToUse', description: 'A user to build with', defaultValue: '', credentialType: "Username with password", required: true )           
     }
+     environment {
+        BUILD_USR_CREDS = credentials("${params.CredsToUse}")
+    }  
     stages {
         stage('Example') {
             steps {
